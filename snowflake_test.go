@@ -17,7 +17,7 @@ func TestSnowFlake(t *testing.T) {
 	}
 
 	ch := make(chan int64)
-	count := 4000000
+	count := 400000
 	// 并发 count 个 goroutine 进行 snowflake id 生成
 	for i := 0; i < count; i++ {
 		go func() {
@@ -34,12 +34,12 @@ func TestSnowFlake(t *testing.T) {
 		// 如果 map 中存在为 id 的 key, 说明生成的 snowflake id 有重复
 		_, ok := m[id]
 		if ok {
-			t.Error("id is not unique!\n")
+			t.Error(id, "出现重复id!\n")
 			return
 		}
 		// 将 id 作为 key 存入 map
 		m[id] = i
 	}
 	// 成功生成 snowflake id
-	fmt.Println("All", count, "snowflake id Get successed!")
+	fmt.Printf("总共生成%d个id\n", count)
 }
